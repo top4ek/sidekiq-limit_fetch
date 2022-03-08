@@ -11,13 +11,13 @@ RSpec.configure do |config|
     Sidekiq::Queue.reset_instances!
     Sidekiq.redis do |it|
       clean_redis = ->(queue) do
-        it.pipelined do
-          it.del "limit_fetch:limit:#{queue}"
-          it.del "limit_fetch:process_limit:#{queue}"
-          it.del "limit_fetch:busy:#{queue}"
-          it.del "limit_fetch:probed:#{queue}"
-          it.del "limit_fetch:pause:#{queue}"
-          it.del "limit_fetch:block:#{queue}"
+        it.pipelined do |p|
+          p.del "limit_fetch:limit:#{queue}"
+          p.del "limit_fetch:process_limit:#{queue}"
+          p.del "limit_fetch:busy:#{queue}"
+          p.del "limit_fetch:probed:#{queue}"
+          p.del "limit_fetch:pause:#{queue}"
+          p.del "limit_fetch:block:#{queue}"
         end
       end
 
